@@ -1,19 +1,23 @@
 import { app, BrowserWindow, screen } from 'electron'
 import * as path from 'path'
 
-function cerateOtherWindow() {
-  console.log(process.env)
-
+function ceratAssignWindow(id: string) {
   const displays = screen.getAllDisplays()
-  const externalDisplay = displays.find((item) => {
-    return item.label == 'VP2768 Series'
-  })
 
-  if (externalDisplay) {
+  const display =
+    displays.find((item) => {
+      return item.id == Number(id)
+    }) || displays[0]
+
+  if (display) {
+    const width = 800
+    const height = 800
     const externalWindow = new BrowserWindow({
       fullscreen: true,
-      x: externalDisplay.bounds.x,
-      y: externalDisplay.bounds.y,
+      width: width,
+      height: height,
+      x: display.bounds.x + display.bounds.width / 2 - width / 2,
+      y: display.bounds.y + display.bounds.height / 2 - height / 2,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
@@ -23,33 +27,17 @@ function cerateOtherWindow() {
   }
 }
 
-function createWindow() {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    fullscreen: false,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  })
-
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, '../index.html'))
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
-}
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  cerateOtherWindow()
-  createWindow()
+  const assignWindowID: string = process.env.ELECTRON_SCREEN_ID ?? '1'
+  ceratAssignWindow(assignWindowID)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) ceratAssignWindow(assignWindowID)
   })
 })
 
