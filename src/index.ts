@@ -1,13 +1,20 @@
 import { app, BrowserWindow, screen } from 'electron'
 import * as path from 'path'
 
-function ceratAssignWindow(id: string) {
-  const displays = screen.getAllDisplays()
 
-  const display =
-    displays.find((item) => {
+
+console.log(process.env.AAAA);
+
+function ceratAssignWindow(id?: string) {
+  let display
+  const displays = screen.getAllDisplays()
+  if (id) {
+    display = displays.find((item) => {
       return item.id == Number(id)
-    }) || displays[0]
+    })
+  } else {
+    display = displays[0]
+  }
 
   if (display) {
     const width = 800
@@ -31,7 +38,7 @@ function ceratAssignWindow(id: string) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  const assignWindowID: string = process.env.ELECTRON_SCREEN_ID ?? '1'
+  const assignWindowID = process.env.ELECTRON_SCREEN_ID
   ceratAssignWindow(assignWindowID)
 
   app.on('activate', function () {
