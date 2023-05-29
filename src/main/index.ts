@@ -1,9 +1,30 @@
-import { app, BrowserWindow, screen } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, screen } from 'electron'
 import * as path from 'path'
+import { getDir } from '../utils'
+// import fs from 'fs'
 
+// ipcMain.on('ipc-example', async (event, arg) => {
+//   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`
+//   console.log(msgTemplate(arg))
+//   event.reply('ipc-example', msgTemplate('pong'))
+// })
 
+// function findApps() {
+//   const dir_path = path.join(process.cwd(), './apps')
+//   const items = fs.readdirSync(dir_path)
 
-console.log(process.env.AAAA);
+//   return items.filter((item) => {
+//     return fs.statSync(path.join(dir_path, item)).isDirectory()
+//   })
+// }
+async function handleGetApps() {
+  return getDir(path.resolve(process.cwd(), './apps'))
+}
+
+async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) {
+  
+  
+}
 
 function ceratAssignWindow(id?: string) {
   let display
@@ -20,16 +41,17 @@ function ceratAssignWindow(id?: string) {
     const width = 800
     const height = 800
     const externalWindow = new BrowserWindow({
-      fullscreen: true,
+      fullscreen: false,
       width: width,
       height: height,
       x: display.bounds.x + display.bounds.width / 2 - width / 2,
       y: display.bounds.y + display.bounds.height / 2 - height / 2,
       webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
+        preload: path.join(__dirname, './preload.js'),
       },
     })
-    externalWindow.loadFile(path.join(__dirname, '../index.html'))
+
+    externalWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
     externalWindow.webContents.openDevTools()
   }
 }
@@ -38,6 +60,9 @@ function ceratAssignWindow(id?: string) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  // console.log(findViewDir())
+  ipcMain.handle('event:getApps', handleGetApps)
+  ipcMain.handle('event:selectApp', handleSelectApp)
   const assignWindowID = process.env.ELECTRON_SCREEN_ID
   ceratAssignWindow(assignWindowID)
 

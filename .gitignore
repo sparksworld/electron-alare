@@ -2,10 +2,12 @@
 
 # dependencies
 /node_modules
-/dist
-# production
-/build
 
+# production
+/release
+/.build
+/apps/**/*
+!/apps/*.md
 # misc
 .DS_Store
 .env.local

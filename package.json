@@ -2,14 +2,15 @@
   "name": "arale",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": ".build/main/index.js",
   "scripts": {
-    "clear": "rimraf dist && rimraf build",
-    "dev": "nodemon -w src --exec 'npm run compile -- --inspect=5858' -e ts",
-    "compile": "npm run clear && tsc && dotenv -e .env electron ./dist/index.js",
-    "make": "npm run clear && tsc && electron-builder build --x64",
+    "clear": "rimraf .build/* && rimraf release/*",
+    "dev": "nodemon -w src --exec 'npm run compile -- --inspect=5858' -e ts,tsx",
+    "compile": "npm run clear && tsc && tsc && npm run start:renderer && dotenv -e .env electron ./.build/main/index.js",
+    "make": "npm run clear && tsc && npm run start:renderer && electron-builder build --x64",
     "make:linux": "npm run clear &&  && tsc && electron-builder build -l --x64",
-    "make:window": "npm run clear && tsc && electron-builder build -w --x64"
+    "make:window": "npm run clear && tsc && electron-builder build -w --x64",
+    "start:renderer": "webpack --config webpack.renderer.js"
   },
   "build": {
     "productName": "arale",
@@ -27,12 +28,22 @@
   "author": "spark",
   "license": "ISC",
   "devDependencies": {
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
     "concurrently": "^8.0.1",
     "dotenv-cli": "^7.2.1",
     "electron": "^24.4.0",
     "electron-builder": "^23.6.0",
+    "html-webpack-plugin": "^5.5.1",
     "nodemon": "^2.0.22",
     "rimraf": "^5.0.1",
-    "typescript": "^5.0.4"
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.0.4",
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
