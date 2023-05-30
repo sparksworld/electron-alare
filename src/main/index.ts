@@ -1,6 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain, screen } from 'electron'
+import isDev from 'electron-is-dev'
 import * as path from 'path'
-import { getDir } from '../utils'
+import url from 'url'
+import { getDir } from './utils'
 // import fs from 'fs'
 
 // ipcMain.on('ipc-example', async (event, arg) => {
@@ -17,14 +19,12 @@ import { getDir } from '../utils'
 //     return fs.statSync(path.join(dir_path, item)).isDirectory()
 //   })
 // }
+
 async function handleGetApps() {
   return getDir(path.resolve(process.cwd(), './apps'))
 }
 
-async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) {
-  
-  
-}
+async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) {}
 
 function ceratAssignWindow(id?: string) {
   let display
@@ -50,8 +50,17 @@ function ceratAssignWindow(id?: string) {
         preload: path.join(__dirname, './preload.js'),
       },
     })
+    // path.join(__dirname, '../renderer/index.html')
+    const main = isDev
+      ? `http://localhost:3000`
+      : url.format({
+          pathname: path.join(__dirname, '../renderer/index.html'),
+          protocol: 'file:',
+          slashes: true,
+        })
 
-    externalWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
+    externalWindow.loadURL(main)
+
     externalWindow.webContents.openDevTools()
   }
 }
