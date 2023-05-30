@@ -3,17 +3,23 @@ const glob = require('glob')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
-module.exports = (env) => {
-  const entry = {}
-  glob.sync(path.resolve(__dirname, `src/main/**/*`)).forEach((file_path) => {
-    const split_path = file_path.split('/')
-    const file_name = split_path[split_path.length - 1]
-    const name = file_name.split('.')[0]
-    entry[name] = file_path
+function getEntries() {
+  let map = {}
+  const entryFiles = glob.sync(path.resolve(__dirname, 'src/main/**/*.ts'))
+
+  entryFiles.forEach((filepath) => {
+    let fileDir = /src\/main\/(.*?)\.ts/.exec(filepath)
+    if (fileDir) {
+      map[fileDir[1]] = filepath
+    }
   })
 
+  return map
+}
+
+module.exports = (env) => {
   return merge(common(env), {
-    entry: entry,
+    entry: getEntries(),
     target: 'electron-main',
     module: {
       rules: [
