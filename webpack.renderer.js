@@ -6,7 +6,6 @@ const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
 module.exports = (env) => {
-  console.log('env.APP_ENV', env.APP_ENV);
   return merge(common(env), {
     entry: path.resolve(__dirname, 'src/renderer/index.tsx'),
     target: ['web', 'electron-renderer'],

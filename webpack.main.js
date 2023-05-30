@@ -27,14 +27,7 @@ module.exports = (env) => {
           test: /.ts(x?)$/,
           exclude: /node_modules/,
           use: [
-            {
-              loader: require.resolve('babel-loader'),
-              options: {
-                babelrc: false,
-                presets: [['@babel/preset-env'], '@babel/preset-react'],
-                plugins: [require.resolve('babel-plugin-syntax-dynamic-import')],
-              },
-            },
+            'babel-loader',
             'ts-loader',
           ],
         },

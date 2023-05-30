@@ -4,17 +4,17 @@
   "description": "",
   "main": ".build/main/index.js",
   "scripts": {
-    "clear": "rimraf .build/* && rimraf release/*",
+    "clear": "rimraf .build && rimraf release",
     "dev": "npm run dev:renderer & nodemon -w src/main --exec \"npm run dev:main && npm run electron\" -e ts",
-    "dev:main": "webpack --config webpack.main.js --mode development --env APP_ENV=development",
-    "dev:renderer": "webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
-    "build:main": "npm run clear && webpack --config webpack.main.js --mode production --env APP_ENV=production",
-    "build:renderer": "npm run clear && webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
+    "dev:main": "rimraf .build/main && webpack --config webpack.main.js --mode development --env APP_ENV=development",
+    "dev:renderer": "rimraf .build/renderer && webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
+    "build:main": "rimraf .build/main && webpack --config webpack.main.js --mode production --env APP_ENV=production",
+    "build:renderer": "rimraf .build/renderer && webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
     "electron": "electron ./.build/main/index.js",
     "start": "npm run clear && npm run dev:main & npm run dev:renderer && npm run electron",
-    "make": "npm run build:main && npm run build:renderer && electron-builder build --x64",
-    "make:linux": "npm run build:main && npm run build:renderer && electron-builder build -l --x64",
-    "make:window": "npm run build:main && npm run build:renderer && electron-builder build -w --x64"
+    "make": "npm run clear && npm run build:main && npm run build:renderer && electron-builder build --x64",
+    "make:linux": "npm run clear && npm run build:main && npm run build:renderer && electron-builder build -l --x64",
+    "make:window": "npm run clear && npm run build:main && npm run build:renderer && electron-builder build -w --x64"
   },
   "build": {
     "productName": "arale",
