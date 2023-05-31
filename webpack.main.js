@@ -21,14 +21,19 @@ module.exports = (env) => {
   return merge(common(env), {
     entry: getEntries(),
     target: 'electron-main',
+    devtool: 'inline-source-map',
     module: {
       rules: [
         {
           test: /.ts(x?)$/,
           exclude: /node_modules/,
           use: [
-            'babel-loader',
-            'ts-loader',
+            {
+              loader: 'ts-loader',
+              options: {
+                configFile: path.resolve(__dirname, './tsconfig.main.json'),
+              },
+            },
           ],
         },
       ],

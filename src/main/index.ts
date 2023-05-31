@@ -1,8 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain, screen } from 'electron'
-import isDev from 'electron-is-dev'
+import * as isDev from 'electron-is-dev'
 import * as path from 'path'
-import url from 'url'
-import { getDir } from './utils'
+import * as url from 'url'
+import * as utils from './utils'
 // import fs from 'fs'
 
 // ipcMain.on('ipc-example', async (event, arg) => {
@@ -21,7 +21,7 @@ import { getDir } from './utils'
 // }
 
 async function handleGetApps() {
-  return getDir(path.resolve(process.cwd(), './apps'))
+  return utils.getDir(path.resolve(process.cwd(), './apps'))
 }
 
 async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) {}
@@ -51,15 +51,21 @@ function ceratAssignWindow(id?: string) {
       },
     })
     // path.join(__dirname, '../renderer/index.html')
-    const main = isDev
-      ? `http://localhost:3000`
-      : url.format({
-          pathname: path.join(__dirname, '../renderer/index.html'),
-          protocol: 'file:',
-          slashes: true,
-        })
+    // const main = isDev
+    //   ? `http://localhost:3000`
+    //   : url.format({
+    //       pathname: path.join(__dirname, '../renderer/index.html'),
+    //       protocol: 'file:',
+    //       slashes: true,
+    //     })
 
-    externalWindow.loadURL(main)
+    externalWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, '../renderer/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+    )
 
     externalWindow.webContents.openDevTools()
   }

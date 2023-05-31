@@ -7,7 +7,9 @@ const common = require('./webpack.common')
 
 module.exports = (env) => {
   return merge(common(env), {
-    entry: path.resolve(__dirname, 'src/renderer/index.tsx'),
+    entry: {
+      renderer: path.resolve(__dirname, 'src/renderer/index.tsx'),
+    },
     target: ['web', 'electron-renderer'],
     module: {
       rules: [
@@ -31,7 +33,7 @@ module.exports = (env) => {
         {
           test: /.ts(x?)$/,
           exclude: /node_modules/,
-          use: ['babel-loader', 'ts-loader'],
+          use: ['babel-loader'],
         },
         {
           test: /\.(css|less)$/,
@@ -73,6 +75,7 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         inject: true,
         template: path.resolve(__dirname, 'public/index.html'),
+        chunks: ['renderer'],
       }),
     ],
 

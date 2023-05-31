@@ -6,10 +6,10 @@
   "scripts": {
     "clear": "rimraf .build && rimraf release",
     "dev": "npm run dev:renderer & nodemon -w src/main --exec \"npm run dev:main && npm run electron\" -e ts",
-    "dev:main": "rimraf .build/main && webpack --config webpack.main.js --mode development --env APP_ENV=development",
-    "dev:renderer": "rimraf .build/renderer && webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
-    "build:main": "rimraf .build/main && webpack --config webpack.main.js --mode production --env APP_ENV=production",
-    "build:renderer": "rimraf .build/renderer && webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
+    "dev:main": "webpack --config webpack.main.js --mode development --env APP_ENV=development",
+    "build:main": "webpack --config webpack.main.js --mode production --env APP_ENV=production",
+    "dev:renderer": "webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
+    "build:renderer": "webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
     "electron": "electron ./.build/main/index.js",
     "start": "npm run clear && npm run dev:main & npm run dev:renderer && npm run electron",
     "make": "npm run clear && npm run build:main && npm run build:renderer && electron-builder build --x64",
@@ -41,11 +41,13 @@
     "@babel/plugin-transform-runtime": "^7.22.4",
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-react": "^7.22.3",
+    "@babel/preset-typescript": "^7.21.5",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^8.0.1",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
@@ -74,6 +76,7 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
+    "core-js": "^3.30.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
