@@ -5,7 +5,8 @@
 
 # production
 /release
-/.build
+/build
+/electron-build
 /apps/**/*
 !/apps/*.md
 # misc

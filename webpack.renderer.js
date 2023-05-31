@@ -1,15 +1,15 @@
 const webpack = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
 module.exports = (env) => {
   return merge(common(env), {
-    entry: {
-      renderer: path.resolve(__dirname, 'src/renderer/index.tsx'),
-    },
+    entry: path.resolve(__dirname, 'src/index.tsx'),
     target: ['web', 'electron-renderer'],
     module: {
       rules: [
@@ -64,7 +64,7 @@ module.exports = (env) => {
       ],
     },
     output: {
-      path: path.resolve(__dirname, '.build/renderer'),
+      path: path.resolve(__dirname, 'build'),
       filename: '[name].[chunkhash:8].js',
     },
     plugins: [
@@ -75,15 +75,27 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         inject: true,
         template: path.resolve(__dirname, 'public/index.html'),
-        chunks: ['renderer'],
+        // chunks: ['renderer'],
       }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'public'),
+            to: path.resolve(__dirname, 'build'),
+            globOptions: {
+              ignore: ['**/index.html'],
+            },
+          },
+        ],
+      }),
+      new CleanWebpackPlugin(),
     ],
 
     devServer: {
       compress: true,
       hot: true,
       port: 3000,
-      static: path.join(__dirname, '.build/renderer'),
+      static: path.join(__dirname, 'build'),
     },
   })
 }

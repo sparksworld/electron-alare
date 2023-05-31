@@ -106,7 +106,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": "."
   },
-  "exclude": ["node_modules", ".build", "release"],
-  "include": ["src/renderer/**/*.ts", "src/renderer/**/*.tsx"],
-  "extends": "./tsconfig.main"
+  "exclude": ["node_modules", "build", "release", "electron-build"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "extends": "./tsconfig.node"
 }

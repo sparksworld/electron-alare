@@ -1,5 +1,5 @@
 import { app, BrowserWindow, dialog, ipcMain, screen } from 'electron'
-import * as isDev from 'electron-is-dev'
+import isDev from 'electron-is-dev'
 import * as path from 'path'
 import * as url from 'url'
 import * as utils from './utils'
@@ -47,14 +47,14 @@ function ceratAssignWindow(id?: string) {
       x: display.bounds.x + display.bounds.width / 2 - width / 2,
       y: display.bounds.y + display.bounds.height / 2 - height / 2,
       webPreferences: {
-        preload: path.join(__dirname, './preload.js'),
+        preload: path.join(__dirname, './preloads/main-preload.js'),
       },
     })
     // path.join(__dirname, '../renderer/index.html')
     const main = isDev
       ? `http://localhost:3000`
       : url.format({
-        pathname: path.join(__dirname, '../renderer/index.html'),
+        pathname: path.join(__dirname, '../build/index.html'),
         protocol: 'file:',
         slashes: true,
       })

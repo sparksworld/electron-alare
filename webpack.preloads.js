@@ -4,10 +4,24 @@ const { merge } = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const common = require('./webpack.common')
 
+function getEntries() {
+  let map = {}
+  const entryFiles = glob.sync(path.resolve(__dirname, 'electron/preloads/**/*.ts'))
+
+  entryFiles.forEach((filepath) => {
+    let fileDir = /electron\/preloads\/(.*?)\.ts/.exec(filepath)
+    if (fileDir) {
+      map[fileDir[1]] = filepath
+    }
+  })
+
+  return map
+}
+
 module.exports = (env) => {
   return merge(common(env), {
-    entry: path.resolve(__dirname, 'electron/index.ts'),
-    target: 'electron-main',
+    entry: getEntries(),
+    target: 'electron-preload',
     devtool: 'inline-source-map',
     module: {
       rules: [
@@ -25,13 +39,9 @@ module.exports = (env) => {
         },
       ],
     },
-    plugins: [
-      new CleanWebpackPlugin({
-        cleanOnceBeforeBuildPatterns: ['**/*', '!preloads*', '!preloads/*'],
-      }),
-    ],
+    plugins: [new CleanWebpackPlugin()],
     output: {
-      path: path.resolve(__dirname, 'electron-build'),
+      path: path.resolve(__dirname, 'electron-build/preloads'),
       filename: '[name].js',
     },
   })
