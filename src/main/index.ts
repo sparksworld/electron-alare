@@ -24,7 +24,7 @@ async function handleGetApps() {
   return utils.getDir(path.resolve(process.cwd(), './apps'))
 }
 
-async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) {}
+async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) { }
 
 function ceratAssignWindow(id?: string) {
   let display
@@ -51,20 +51,16 @@ function ceratAssignWindow(id?: string) {
       },
     })
     // path.join(__dirname, '../renderer/index.html')
-    // const main = isDev
-    //   ? `http://localhost:3000`
-    //   : url.format({
-    //       pathname: path.join(__dirname, '../renderer/index.html'),
-    //       protocol: 'file:',
-    //       slashes: true,
-    //     })
-
-    externalWindow.loadURL(
-      url.format({
+    const main = isDev
+      ? `http://localhost:3000`
+      : url.format({
         pathname: path.join(__dirname, '../renderer/index.html'),
         protocol: 'file:',
         slashes: true,
       })
+
+    externalWindow.loadURL(
+      main
     )
 
     externalWindow.webContents.openDevTools()
