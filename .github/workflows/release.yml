@@ -28,3 +28,5 @@ jobs:
         run: |
           npm install
           npm run package:mac
+        env:
+         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
