@@ -1,5 +1,5 @@
 {
-  "name": "arale",
+  "name": "electron-arale",
   "version": "1.0.0",
   "description": "",
   "main": "electron-build/main.js",
@@ -12,10 +12,11 @@
     "dev:renderer": "webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
     "build:renderer": "webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
     "electron": "electron ./electron-build/main.js",
-    "start": "npm run dev:renderer & npm run dev:main && npm run dev:preloads && npm run electron",
-    "make": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build --x64",
-    "make:linux": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -l --x64",
-    "make:window": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -w --x64"
+    "preview": "npm run dev:renderer & npm run dev:main && npm run dev:preloads && npm run electron",
+    "package": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build --x64",
+    "package:mac": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -m --x64",
+    "package:linux": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -l --x64",
+    "package:window": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -w --x64"
   },
   "build": {
     "productName": "arale",
