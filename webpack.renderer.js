@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -27,7 +27,10 @@ module.exports = (env) => {
         {
           test: /(\.(eot|ttf|woff|woff2|otf)|font)$/,
           loader: 'file-loader',
-          options: { outputPath: 'fonts/', esModule: false },
+          options: {
+            outputPath: 'fonts/',
+            esModule: false,
+          },
         },
 
         {
@@ -39,7 +42,9 @@ module.exports = (env) => {
           test: /\.(css|less)$/,
           exclude: [/\.module\.(css|less)/, /\.global\.less$/],
           use: [
-            env.APP_ENV == 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+            env.APP_ENV == 'production'
+              ? MiniCssExtractPlugin.loader
+              : 'style-loader',
             'css-loader',
             'postcss-loader',
             'less-loader',
@@ -48,7 +53,9 @@ module.exports = (env) => {
         {
           test: /\.module\.(css|less)/,
           use: [
-            env.APP_ENV == 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+            env.APP_ENV == 'production'
+              ? MiniCssExtractPlugin.loader
+              : 'style-loader',
             {
               loader: 'css-loader',
               options: {

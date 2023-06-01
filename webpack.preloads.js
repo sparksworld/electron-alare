@@ -6,7 +6,9 @@ const common = require('./webpack.common')
 
 function getEntries() {
   let map = {}
-  const entryFiles = glob.sync(path.resolve(__dirname, 'electron/preloads/**/*.ts'))
+  const entryFiles = glob.sync(
+    path.resolve(__dirname, 'electron/preloads/**/*.ts')
+  )
 
   entryFiles.forEach((filepath) => {
     let fileDir = /electron\/preloads\/(.*?)\.ts/.exec(filepath)

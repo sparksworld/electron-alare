@@ -1,9 +1,8 @@
-import { app, BrowserWindow, dialog, ipcMain, screen } from 'electron'
+import { app, BrowserWindow, ipcMain, screen } from 'electron'
 import isDev from 'electron-is-dev'
 import * as path from 'path'
 import * as url from 'url'
 import * as utils from './utils'
-// import fs from 'fs'
 
 // ipcMain.on('ipc-example', async (event, arg) => {
 //   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`
@@ -21,10 +20,16 @@ import * as utils from './utils'
 // }
 
 async function handleGetApps() {
+  console.log(process.env.AAAA)
   return utils.getDir(path.resolve(process.cwd(), './apps'))
 }
 
-async function handleSelectApp(event: Electron.IpcMainInvokeEvent, ...args: any[]) { }
+async function handleSelectApp(
+  event: Electron.IpcMainInvokeEvent,
+  ...args: unknown[]
+) {
+  console.log(event, args)
+}
 
 function ceratAssignWindow(id?: string) {
   let display
@@ -54,14 +59,12 @@ function ceratAssignWindow(id?: string) {
     const main = isDev
       ? `http://localhost:3000`
       : url.format({
-        pathname: path.join(__dirname, '../build/index.html'),
-        protocol: 'file:',
-        slashes: true,
-      })
+          pathname: path.join(__dirname, '../build/index.html'),
+          protocol: 'file:',
+          slashes: true,
+        })
 
-    externalWindow.loadURL(
-      main
-    )
+    externalWindow.loadURL(main)
 
     externalWindow.webContents.openDevTools()
   }
@@ -80,7 +83,8 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) ceratAssignWindow(assignWindowID)
+    if (BrowserWindow.getAllWindows().length === 0)
+      ceratAssignWindow(assignWindowID)
   })
 })
 

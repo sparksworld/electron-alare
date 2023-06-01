@@ -1,0 +1,6 @@
+apps
+build
+electron-build
+node_modules
+public
+release
