@@ -7,9 +7,10 @@
 - [x] 支持 mac/linux/window 平台打包
 - [x] 支持 dotenv 导入环境变量
 
-
 ### 使用
+
 - 开发调试
+
   ```
   npm run dev
   ```
@@ -24,17 +25,19 @@
 
 ### 其他
 
-- 编译electron中主进程
+- 编译 electron 中主进程
+
   ```
   npm run build:main && npm run build:preloads
   ```
 
-- 编译electron的渲染进程
+- 编译 electron 的渲染进程
+
   ```
   npm run build:renderer
   ```
 
-- 调试electron的渲染进程
+- 调试 electron 的渲染进程
   ```
   npm run dev:renderer
   ```
