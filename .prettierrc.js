@@ -1,8 +1,6 @@
-module.exports =
-  {
-    printWidth: 10,
-    singleQuote: true,
-    semi: false,
-    trailingComma:
-      'es5',
-  }
+module.exports = {
+  printWidth: 80,
+  singleQuote: true,
+  semi: false,
+  trailingComma: 'es5',
+}

@@ -12,6 +12,13 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules", "build", "electron-build", "release"],
-  "include": ["electron/**/*.ts"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "electron-build",
+    "release"
+  ],
+  "include": [
+    "electron/**/*.ts"
+  ]
 }
