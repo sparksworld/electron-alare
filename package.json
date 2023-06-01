@@ -17,7 +17,7 @@
     "package:mac": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -m --x64",
     "package:linux": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -l --x64",
     "package:window": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -w --x64",
-    "lint": "eslint src --fix --ext .ts,.tsx,.js",
+    "lint": "eslint --fix --ext .ts,.tsx,.js",
     "prepare": "husky install"
   },
   "husky": {
@@ -28,8 +28,7 @@
   "lint-staged": {
     "*.{ts,tsx,js}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "build": {
