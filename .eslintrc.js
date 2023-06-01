@@ -1,6 +1,6 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
   extends: [
+    'plugin:react/recommended',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -11,9 +11,10 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react'],
   parserOptions: {
-    ecmaVersion: 2020,
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 'latest',
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -24,6 +25,8 @@ module.exports = {
     node: true,
   },
   rules: {
+    'react/display-name': 1,
     'no-unused-vars': 1,
+    '@typescript-eslint/no-var-requires': 0,
   },
 }
