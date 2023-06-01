@@ -1,32 +1,30 @@
 name: Release
 on:
   push:
-    tags: 
-       - 'v*.*.*'
-       
+    tags:
+      - 'v*.*.*'
+
 jobs:
- release:
-   name: build and release Electron app
-   runs-on: ${{ matrix.os }}
+  release:
+    name: build and release Electron app
+    runs-on: ${{ matrix.os }}
 
-   strategy:
-     fail-fast: false
-     matrix:
-       os: [macos-latest]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
 
-   steps:
-     - name: Check out git repository
-       uses: actions/checkout@v3.0.0
+    steps:
+      - name: Check out git repository
+        uses: actions/checkout@v3.0.0
 
-     - name: Install Node.js
-       uses: actions/setup-node@v3.0.0
-       with: 
+      - name: Install Node.js
+        uses: actions/setup-node@v3.0.0
+        with:
           node-version: '19.x'
 
-     - name: Release for Mac
-       if: matrix.os == 'macos-latest'
-       run: |
-        npm install
-        npm run package:mac
-       env:
-         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Release for Mac
+        if: matrix.os == 'macos-latest'
+        run: |
+          npm install
+          npm run package:mac
