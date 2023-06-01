@@ -1,9 +1,9 @@
 module.exports = {
   extends: [
-    'plugin:react/recommended',
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   settings: {
     react: {
@@ -22,9 +22,19 @@ module.exports = {
   },
   env: {
     browser: true,
+    es2021: true,
     node: true,
   },
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        printWidth: 80,
+        singleQuote: true,
+        semi: false,
+        trailingComma: 'es5',
+      },
+    ],
     'react/display-name': 1,
     'no-unused-vars': 1,
     '@typescript-eslint/no-var-requires': 0,

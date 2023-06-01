@@ -53,7 +53,7 @@ module.exports = (env) => {
         {
           test: /\.module\.(css|less)/,
           use: [
-            env.APP_ENV == 'production'
+            env.APP_ENV === 'production'
               ? MiniCssExtractPlugin.loader
               : 'style-loader',
             {

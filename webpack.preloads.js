@@ -5,13 +5,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const common = require('./webpack.common')
 
 function getEntries() {
-  let map = {}
+  const map = {}
   const entryFiles = glob.sync(
     path.resolve(__dirname, 'electron/preloads/**/*.ts')
   )
 
   entryFiles.forEach((filepath) => {
-    let fileDir = /electron\/preloads\/(.*?)\.ts/.exec(filepath)
+    const fileDir = /electron\/preloads\/(.*?)\.ts/.exec(filepath)
     if (fileDir) {
       map[fileDir[1]] = filepath
     }
