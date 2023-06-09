@@ -13,6 +13,12 @@ module.exports = (env) => {
       }),
     ],
     resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+        '@src': path.resolve(__dirname, 'src'),
+        '@preloads/*': path.resolve(__dirname, 'electron/preloads'),
+        '@electron/*': path.resolve(__dirname, 'electron'),
+      },
       extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     stats: 'errors-only',

@@ -1,5 +1,5 @@
 declare interface Window {
-  electron?: unknown
+  electron?: import('@preloads/main-preload').ElectronHandler
 }
 
 declare module '*.avif' {

@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ErrorBoundary from '@src/components/ErrorBoundary'
+import Home from './Home'
 
 const App = () => {
+  useEffect(() => {
+    window.electron?.ipcRenderer?.sendMessage('ipc-example', ['ping'])
+  }, [])
   return (
-    <div className="page">
-      <img className="logo" src={require('./assets/logo.png')} alt="" />
+    <div>
+      <ErrorBoundary>
+        <Home />
+      </ErrorBoundary>
     </div>
   )
 }

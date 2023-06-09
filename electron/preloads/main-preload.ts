@@ -1,10 +1,9 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 
-export type Channels = 'ipc-example'
+export type Channels = 'ipc-get-apps' | 'ipc-example'
 
 const electronHandler = {
   getAppList: (...args: []) => ipcRenderer.invoke('event:getApps', ...args),
-  selectApp: (...args: []) => ipcRenderer.invoke('event:selectApp', ...args),
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
       ipcRenderer.send(channel, ...args)

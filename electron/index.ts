@@ -20,18 +20,15 @@ import * as utils from './utils'
 // }
 
 async function handleGetApps() {
-  console.log(process.env.AAAA)
   return utils.getDir(path.resolve(process.cwd(), './apps'))
 }
 
-async function handleSelectApp(
-  event: Electron.IpcMainInvokeEvent,
-  ...args: unknown[]
-) {
-  console.log(event, args)
-}
+ipcMain.on('ipc-example', async (event, arg) => {
+  // console.log(event, arg)
+  event.reply('ipc-example', 'pong')
+})
 
-function ceratAssignWindow(id?: string) {
+async function ceratAssignWindow(id?: string) {
   let display
   const displays = screen.getAllDisplays()
   if (id) {
@@ -43,8 +40,8 @@ function ceratAssignWindow(id?: string) {
   }
 
   if (display) {
-    const width = 800
-    const height = 800
+    const width = 1920
+    const height = 1080
     const externalWindow = new BrowserWindow({
       fullscreen: false,
       width: width,
@@ -76,7 +73,7 @@ function ceratAssignWindow(id?: string) {
 app.whenReady().then(() => {
   // console.log(findViewDir())
   ipcMain.handle('event:getApps', handleGetApps)
-  ipcMain.handle('event:selectApp', handleSelectApp)
+  // ipcMain.handle('event:selectApp', handleSelectApp)
   const assignWindowID = process.env.ELECTRON_SCREEN_ID
   ceratAssignWindow(assignWindowID)
 

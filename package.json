@@ -74,6 +74,7 @@
     "dotenv-webpack": "^8.0.1",
     "electron": "^24.4.0",
     "electron-builder": "^23.6.0",
+    "electron-devtools-installer": "^3.2.0",
     "electron-is-dev": "^2.0.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
@@ -91,9 +92,11 @@
     "nodemon": "^2.0.22",
     "postcss-loader": "^7.3.2",
     "postcss-preset-env": "^8.4.1",
+    "postcss-pxtorem": "^6.0.0",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "style-loader": "^3.3.3",
+    "tailwindcss": "^3.3.2",
     "ts-loader": "^9.4.3",
     "typescript": "^5.0.4",
     "url-loader": "^4.1.1",
@@ -103,6 +106,7 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
+    "amfe-flexible": "^2.2.1",
     "core-js": "^3.30.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

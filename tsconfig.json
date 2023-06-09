@@ -28,7 +28,10 @@
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
     // "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
-    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+    "paths": {
+      "@*": ["*"],
+      "@/*": ["*"]
+    },
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [
     //   "src/renderer"
@@ -106,15 +109,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": "."
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "release",
-    "electron-build"
-  ],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
+  "exclude": ["node_modules", "build", "release", "electron-build"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "extends": "./tsconfig.node"
 }
