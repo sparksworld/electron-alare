@@ -7,11 +7,9 @@ const App = () => {
     window.electron?.ipcRenderer?.sendMessage('ipc-example', ['ping'])
   }, [])
   return (
-    <div>
-      <ErrorBoundary>
-        <Home />
-      </ErrorBoundary>
-    </div>
+    <ErrorBoundary>
+      <Home />
+    </ErrorBoundary>
   )
 }
 

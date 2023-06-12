@@ -1,4 +1,10 @@
-import { app, BrowserWindow, ipcMain, screen } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  IpcMainInvokeEvent,
+  screen,
+} from 'electron'
 import isDev from 'electron-is-dev'
 import * as path from 'path'
 import * as url from 'url'
@@ -23,21 +29,50 @@ async function handleGetApps() {
   return utils.getDir(path.resolve(process.cwd(), './apps'))
 }
 
+async function handleGetScreens() {
+  return screen.getAllDisplays()
+}
+
 ipcMain.on('ipc-example', async (event, arg) => {
   // console.log(event, arg)
   event.reply('ipc-example', 'pong')
 })
 
-async function ceratAssignWindow(id?: string) {
-  let display
+const createWindow = () => {
+  const width = 1920
+  const height = 1080
+  const window = new BrowserWindow({
+    fullscreen: false,
+    width: width,
+    height: height,
+    webPreferences: {
+      preload: path.join(__dirname, './preloads/main-preload.js'),
+      webSecurity: false,
+    },
+  })
+  // path.join(__dirname, '../renderer/index.html')
+  const main = isDev
+    ? `http://localhost:3000`
+    : url.format({
+        pathname: path.join(__dirname, '../build/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+
+  window.loadURL(main)
+  isDev && window.webContents.openDevTools()
+}
+
+async function ceratAssignWindow(
+  channel: IpcMainInvokeEvent,
+  activeApp: any,
+  activeScreen: any
+) {
   const displays = screen.getAllDisplays()
-  if (id) {
-    display = displays.find((item) => {
-      return item.id == Number(id)
-    })
-  } else {
-    display = displays[0]
-  }
+
+  const display = displays.find((item) => {
+    return item.id == activeScreen?.id
+  })
 
   if (display) {
     const width = 1920
@@ -49,21 +84,22 @@ async function ceratAssignWindow(id?: string) {
       x: display.bounds.x + display.bounds.width / 2 - width / 2,
       y: display.bounds.y + display.bounds.height / 2 - height / 2,
       webPreferences: {
-        preload: path.join(__dirname, './preloads/main-preload.js'),
+        // preload: path.join(__dirname, './preloads/main-preload.js'),
+        webSecurity: false,
+        nodeIntegration: true,
+        contextIsolation: false,
       },
     })
-    // path.join(__dirname, '../renderer/index.html')
-    const main = isDev
-      ? `http://localhost:3000`
-      : url.format({
-          pathname: path.join(__dirname, '../build/index.html'),
-          protocol: 'file:',
-          slashes: true,
-        })
 
-    externalWindow.loadURL(main)
+    externalWindow.loadURL(
+      url.format({
+        pathname: path.join(activeApp?.path, './index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+    )
 
-    externalWindow.webContents.openDevTools()
+    isDev && externalWindow.webContents.openDevTools()
   }
 }
 
@@ -73,15 +109,17 @@ async function ceratAssignWindow(id?: string) {
 app.whenReady().then(() => {
   // console.log(findViewDir())
   ipcMain.handle('event:getApps', handleGetApps)
+  ipcMain.handle('event:getScreens', handleGetScreens)
+  ipcMain.handle('event:openApp', ceratAssignWindow)
+
   // ipcMain.handle('event:selectApp', handleSelectApp)
-  const assignWindowID = process.env.ELECTRON_SCREEN_ID
-  ceratAssignWindow(assignWindowID)
+  // const assignWindowID = process.env.ELECTRON_SCREEN_ID
+  createWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0)
-      ceratAssignWindow(assignWindowID)
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 

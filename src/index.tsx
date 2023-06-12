@@ -10,4 +10,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLDivElement
 )
 
-root.render(<App />)
+root.render(
+  <div className="relative w-screen h-screen overflow-hidden bg-gray-800">
+    <App />
+  </div>
+)

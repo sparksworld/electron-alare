@@ -102,7 +102,7 @@ module.exports = (env) => {
       compress: true,
       hot: true,
       port: 3000,
-      static: path.join(__dirname, 'build'),
+      static: path.join(__dirname, 'apps'),
     },
   })
 }
