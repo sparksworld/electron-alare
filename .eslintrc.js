@@ -35,6 +35,7 @@ module.exports = {
         singleQuote: true,
         semi: false,
         trailingComma: 'es5',
+        endOfLine: 'auto',
       },
     ],
     'react/display-name': 1,
