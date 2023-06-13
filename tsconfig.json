@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "jsx": "react" /* Specify what JSX code is generated. */,
-    "module": "ESNext",
-    "lib": ["ESNext", "dom", "dom.iterable"],
+    "module": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable"],
     "paths": {
       "@*": ["*"]
     },
