@@ -6,7 +6,6 @@
 # production
 /release
 /build
-/electron-build
 /apps/**/*
 !/apps/*.md
 # misc
