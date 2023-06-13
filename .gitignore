@@ -6,6 +6,7 @@
 # production
 /release
 /build
+/alare-build
 /apps/**/*
 !/apps/*.md
 # misc
