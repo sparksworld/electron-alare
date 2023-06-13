@@ -1,7 +1,7 @@
 /apps/
 /build/
-/electron/
-/electron-build/
+/alare/
+/alare-build/
 /node_modules/
 /public/
 /release/
