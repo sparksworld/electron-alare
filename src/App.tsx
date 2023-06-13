@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ErrorBoundary from '@src/components/ErrorBoundary'
-import Home from './Home'
+import Home from './Home/index'
 
 const App = () => {
   useEffect(() => {

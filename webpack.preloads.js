@@ -7,11 +7,11 @@ const common = require('./webpack.common')
 function getEntries() {
   const map = {}
   const entryFiles = glob.sync(
-    path.resolve(__dirname, 'electron/preloads/**/*.ts')
+    path.resolve(__dirname, 'alare/preloads/**/*.ts')
   )
 
   entryFiles.forEach((filepath) => {
-    const fileDir = /electron\/preloads\/(.*?)\.ts/.exec(filepath)
+    const fileDir = /alare\/preloads\/(.*?)\.ts/.exec(filepath)
     if (fileDir) {
       map[fileDir[1]] = filepath
     }
@@ -33,9 +33,9 @@ module.exports = (env) => {
           use: [
             {
               loader: 'ts-loader',
-              options: {
-                configFile: path.resolve(__dirname, './tsconfig.node.json'),
-              },
+              // options: {
+              //   configFile: path.resolve(__dirname, './tsconfig.node.json'),
+              // },
             },
           ],
         },
@@ -43,7 +43,7 @@ module.exports = (env) => {
     },
     plugins: [new CleanWebpackPlugin()],
     output: {
-      path: path.resolve(__dirname, 'electron-build/preloads'),
+      path: path.resolve(__dirname, 'alare-build/preloads'),
       filename: '[name].js',
     },
   })

@@ -36,7 +36,7 @@ module.exports = (env) => {
         {
           test: /.ts(x?)$/,
           exclude: /node_modules/,
-          use: ['babel-loader'],
+          use: ['babel-loader', 'ts-loader'],
         },
         {
           test: /\.(css|less)$/,
@@ -103,6 +103,15 @@ module.exports = (env) => {
       hot: true,
       port: 3000,
       static: path.join(__dirname, 'apps'),
+      client: {
+        progress: true,
+        reconnect: true,
+        overlay: {
+          errors: true,
+          warnings: false,
+          runtimeErrors: true,
+        },
+      },
     },
   })
 }

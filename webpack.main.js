@@ -6,7 +6,7 @@ const common = require('./webpack.common')
 
 module.exports = (env) => {
   return merge(common(env), {
-    entry: path.resolve(__dirname, 'electron/index.ts'),
+    entry: path.resolve(__dirname, 'alare/index.ts'),
     target: 'electron-main',
     devtool: 'inline-source-map',
     module: {
@@ -17,9 +17,9 @@ module.exports = (env) => {
           use: [
             {
               loader: 'ts-loader',
-              options: {
-                configFile: path.resolve(__dirname, './tsconfig.node.json'),
-              },
+              // options: {
+              //   configFile: path.resolve(__dirname, './tsconfig.node.json'),
+              // },
             },
           ],
         },
@@ -31,7 +31,7 @@ module.exports = (env) => {
       }),
     ],
     output: {
-      path: path.resolve(__dirname, 'electron-build'),
+      path: path.resolve(__dirname, 'alare-build'),
       filename: '[name].js',
     },
   })

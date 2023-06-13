@@ -2,16 +2,16 @@
   "name": "electron-arale",
   "version": "1.0.0",
   "description": "",
-  "main": "electron-build/main.js",
+  "main": "alare-build/main.js",
   "scripts": {
-    "dev": "npm run dev:renderer & nodemon -w electron --exec \"npm run dev:preloads && npm run dev:main && npm run electron\" -e ts",
+    "dev": "npm run dev:renderer & nodemon -w alare --exec \"npm run dev:preloads && npm run dev:main && npm run electron\" -e ts",
     "dev:main": "webpack --config webpack.main.js --mode development --env APP_ENV=development",
     "build:main": "webpack --config webpack.main.js --mode production --env APP_ENV=production",
     "dev:preloads": "webpack --config webpack.preloads.js --mode development --env APP_ENV=development",
     "build:preloads": "webpack --config webpack.preloads.js --mode production --env APP_ENV=production",
     "dev:renderer": "webpack-dev-server --config webpack.renderer.js --mode development --env APP_ENV=development",
     "build:renderer": "webpack --config webpack.renderer.js --mode production --env APP_ENV=production",
-    "electron": "electron ./electron-build/main.js",
+    "electron": "electron ./alare-build/main.js",
     "preview": "npm run dev:renderer & npm run dev:main && npm run dev:preloads && npm run electron",
     "package": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build --x64",
     "package:mac": "rimraf release && npm run build:main && npm run build:preloads && npm run build:renderer && electron-builder build -m --x64",
@@ -26,7 +26,11 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js}": [
+    "src/*.{ts,tsx,js}": [
+      "eslint --fix",
+      "prettier --config .prettierrc.js --write"
+    ],
+    "alare/*.{ts,tsx,js}": [
       "eslint --fix",
       "prettier --config .prettierrc.js --write"
     ]
@@ -36,7 +40,7 @@
     "appId": "com.arale.app",
     "files": [
       "build/**/*",
-      "electron-build/**/*"
+      "alare-build/**/*"
     ],
     "directories": {
       "output": "release"
@@ -79,6 +83,7 @@
     "electron-is-dev": "^2.0.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-webpack-plugin": "^4.0.1",

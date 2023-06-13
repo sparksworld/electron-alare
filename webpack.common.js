@@ -7,20 +7,25 @@ module.exports = (env) => {
   return {
     devtool: process.env.APP_ENV == 'development' ? 'source-map' : false,
     plugins: [
-      new ESLintPlugin(),
+      new ESLintPlugin({
+        emitError: true,
+        failOnError: true,
+        emitWarning: true,
+        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+        context: path.resolve(__dirname, '.'),
+        exclude: 'node_modules',
+      }),
       new Dotenv({
-        path: path.resolve(__dirname, `.env.${env.APP_ENV}`),
+        path: path.join(__dirname, `.env.${env.APP_ENV}`),
       }),
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        '@src': path.resolve(__dirname, 'src'),
-        '@preloads/*': path.resolve(__dirname, 'electron/preloads'),
-        '@electron/*': path.resolve(__dirname, 'electron'),
+        '@src': path.join(__dirname, 'src'),
+        '@alare': path.resolve(__dirname, 'alare'),
       },
-      extensions: ['.ts', '.tsx', '.js', '.json'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
-    stats: 'errors-only',
+    stats: 'errors-warnings',
   }
 }

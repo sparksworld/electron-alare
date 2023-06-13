@@ -5,10 +5,11 @@ import {
   IpcMainInvokeEvent,
   screen,
 } from 'electron'
+
 import isDev from 'electron-is-dev'
 import * as path from 'path'
 import * as url from 'url'
-import * as utils from './utils'
+import * as utils from '@alare/utils'
 
 // ipcMain.on('ipc-example', async (event, arg) => {
 //   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`
@@ -42,7 +43,7 @@ const createWindow = () => {
   const width = 1920
   const height = 1080
   const window = new BrowserWindow({
-    fullscreen: false,
+    fullscreen: JSON.parse(process.env.APP_IS_FULL),
     width: width,
     height: height,
     webPreferences: {
@@ -78,7 +79,7 @@ async function ceratAssignWindow(
     const width = 1920
     const height = 1080
     const externalWindow = new BrowserWindow({
-      fullscreen: false,
+      fullscreen: JSON.parse(process.env.APPS_IS_FULL),
       width: width,
       height: height,
       x: display.bounds.x + display.bounds.width / 2 - width / 2,

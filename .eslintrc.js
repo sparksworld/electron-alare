@@ -1,9 +1,12 @@
 module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    // 'plugin:node/recommended',
   ],
   settings: {
     react: {
@@ -13,9 +16,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   parserOptions: {
-    parser: '@typescript-eslint/parser',
-    ecmaVersion: 'latest',
     sourceType: 'module',
+    allowImportExportEverywhere: false,
     ecmaFeatures: {
       jsx: true,
     },

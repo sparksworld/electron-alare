@@ -7,19 +7,16 @@ const Index = () => {
   const [active, setActive] = useState(null)
 
   useEffect(() => {
-    window.electron?.getApps().then((list: any[]) => {
-      console.log('list', list)
-      setList(list)
-    })
-    window.electron?.getScreens().then((screens: any[]) => {
-      console.log('screens', screens)
-      setScreenList(screens)
-      // setList(list)
-    })
+    window.electron?.getApps().then(setList)
+    window.electron?.getScreens().then(setScreenList)
   }, [])
 
-  const onActiveHandle = (active) => {
-    setActive(active)
+  const onActiveHandle = (active: any) => {
+    if (screenList?.length == 1) {
+      onOpenAppHandle(list[active], screenList[0])
+    } else {
+      setActive(active)
+    }
   }
 
   const onOpenAppHandle = (app: any, screen: any) => {
